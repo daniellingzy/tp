@@ -33,25 +33,44 @@ public class TaskTabPanel extends UiPart<VBox> {
         ongoingTaskListPanel = new TaskListPanel(logic.getViewTaskList());
         ongoingTaskListPanel.setMainScreen(mainScreen);
 
+
         completedTaskListPanel = new TaskListPanel(logic.getViewTaskList());
         completedTaskListPanel.setMainScreen(mainScreen);
 
         ongoingTaskListComponent.getChildren().clear();
         ongoingTaskListComponent.getChildren().add(ongoingTaskListPanel.getRoot());
 
+        taskTabPane.prefHeightProperty().bind(this.getRoot().prefHeightProperty());
+        ongoingTaskListPanel.getRoot().prefHeightProperty()
+                .bind(this.getRoot().prefHeightProperty());
+        completedTaskListPanel.getRoot().prefHeightProperty()
+                .bind(this.getRoot().prefHeightProperty());
+
         completedTaskListComponent.getChildren().clear();
         completedTaskListComponent.getChildren().add(completedTaskListPanel.getRoot());
+
     }
 
     @Override
     public void requestFocus() {
-        int selectedTabIndex = taskTabPane.getSelectionModel().getSelectedIndex();
-
-        boolean isOngoingTabSelected = selectedTabIndex == 0;
-        if (isOngoingTabSelected) {
+        if (checkIsOngoingTabSelected()) {
             ongoingTaskListPanel.requestFocus();
         } else {
             completedTaskListPanel.requestFocus();
         }
+    }
+
+    public void scrollToTaskIndex(int displayIndex) {
+        if (checkIsOngoingTabSelected()) {
+            ongoingTaskListPanel.scrollToTaskIndex(displayIndex);
+        } else {
+            completedTaskListPanel.scrollToTaskIndex(displayIndex);
+        }
+    }
+
+    private boolean checkIsOngoingTabSelected() {
+        int selectedTabIndex = taskTabPane.getSelectionModel().getSelectedIndex();
+        boolean isOngoingTabSelected = selectedTabIndex == 0;
+        return isOngoingTabSelected;
     }
 }
