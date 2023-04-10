@@ -5,7 +5,7 @@ title: Daniel's Project Portfolio Page
 
 #### Project: Vimification
 
-**Vimification** is a **desktop app** built for Vim enthusasts to manage tasks and deadlines, optimized for use via a **Command Line Interface** (CLI) while still having the benefits of a **Graphical User Interface** (GUI).
+**Vimification** is a **desktop app** built for Vim enthusiasts to manage tasks and deadlines, optimized for use via a **Command Line Interface** (CLI) while still having the benefits of a **Graphical User Interface** (GUI).
 
 #### Contributions
 
@@ -21,6 +21,7 @@ Given below are my contributions to the project:
 
     - Improved and wrote more testing, for better coverage.
     - Wrote a total of 11 unit-testing test classes for all classes within the `Vimification.common` package.
+    - Contributed a total of 75 testcases.
 
 - **Contribution to the UG**
 
@@ -30,15 +31,18 @@ Given below are my contributions to the project:
 
 - **Contribution to the DG**
 
-    - Helped to check the product for documentation bugs within UG.
+    - Helped to check the product for documentation bugs within DG.
 
 - **Contribution to team-based tasks**
 
     - Helped list down the tasks needed for the team.
     - Clarified doubts when required actively.
+    - Helped review PRs from other members.
+    - Helped review issues from other members.
+    - Helped to actively check for documentation bug, especially in v1.4.
   
 - **Review/mentoring contributions**
 
-    - Reviewed multiple pull requests: [#30](https://github.com/AY2223S2-CS2103T-T15-3/tp/pull/18), [#60](https://github.com/AY2223S2-CS2103T-T15-3/tp/pull/85), [#60](https://github.com/AY2223S2-CS2103T-T15-3/tp/pull/60), [#70](https://github.com/AY2223S2-CS2103T-T15-3/tp/pull/70).
+    - Reviewed multiple pull requests: [#56](https://github.com/AY2223S2-CS2103T-T15-3/tp/pull/56), [#83](https://github.com/AY2223S2-CS2103T-T15-3/tp/pull/83), etc.
     - Answered issues: [#119](https://github.com/AY2223S2-CS2103T-T15-3/tp/issues/119) etc.
     - Gave suggestions: [#211](https://github.com/AY2223S2-CS2103T-T15-3/tp/issues/211) etc.
