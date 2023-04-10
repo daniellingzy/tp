@@ -9,6 +9,9 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for {@link LogsCenter}.
+ */
 public class LogsCenterTest {
 
     private static final Logger LOGGER = LogsCenter.getLogger(LogsCenterTest.class);

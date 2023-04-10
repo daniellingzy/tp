@@ -15,6 +15,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for {@link Config}.
+ */
 @DisplayName("Config")
 public class ConfigTest {
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit testing class for the Version class.
+ * Unit tests for {@link Version}.
  */
 public class VersionTest {
 

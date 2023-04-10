@@ -2,9 +2,13 @@ package vimification.common.exceptions;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vimification.common.core.GuiSettings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests for {@link DataConversionException}.
+ */
 public class DataConversionExceptionTest {
 
     @Test
