@@ -999,12 +999,7 @@ Use case ends.
 
 - **Mainstream OS**: Windows, Linux, Unix, OS-X
 - **GUI**: Graphical User Interface
-- # **UML** Unified Modeling Language
 - **UML**: Unified Modeling Language
-
----
-
-> > > > > > > e4e5165e51b6e521ef7c71afdb033c9e5cd92e98
 
 ---
 
@@ -1032,7 +1027,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
       Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
 
 ### Adding
 
