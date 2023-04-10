@@ -1,22 +1,16 @@
 package vimification.ui;
 
-import java.util.List;
-
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import vimification.internal.Logic;
-import vimification.internal.command.CommandException;
 import vimification.internal.command.CommandResult;
-import vimification.internal.parser.ParserException;
 
 /**
- *
+ * Panel containing the input of a command.
  */
 public class CommandInput extends UiPart<HBox> {
 
@@ -27,6 +21,12 @@ public class CommandInput extends UiPart<HBox> {
     @FXML
     private TextField inputField;
 
+    /**
+     * Constructor for CommandInput.
+     *
+     * @param mainScreen the main screen of the application
+     * @param logic the logic of the application
+     */
     public CommandInput(MainScreen mainScreen, Logic logic) {
         super(FXML);
         this.mainScreen = mainScreen;
@@ -48,96 +48,48 @@ public class CommandInput extends UiPart<HBox> {
 
         if (isEscEvent || isTextFieldEmpty()) {
             mainScreen.clearBottomComponent();
-            returnFocusToParent();
+            returnFocusToTaskListPanel();
         }
 
         if (isEnterEvent) {
             String commandString = inputField.getText();
             executeCommand(commandString);
-            returnFocusToParent();
         }
 
     }
 
-    // TODO: REMOVE THIS AFTER TESTING
-    private static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
+    /**
+     * Cleans the command string by removing the colon and any leading or trailing whitespace.
+     *
+     * @param commandString the command string to be cleaned
+     * @return the cleaned command string
+     */
     private String cleanCommandString(String commandString) {
         boolean isCommandHasColon = commandString.startsWith(":");
         if (!isCommandHasColon) {
-            System.out.println("[Your command] " + commandString + " is invalid");
+            return commandString;
         }
-
         String strippedCommandString = commandString.substring(1).strip();
         return strippedCommandString;
     }
 
+    /**
+     * Executes the command string.
+     *
+     * @param input the command string to be executed
+     */
     private void executeCommand(String input) {
 
         String commandString = cleanCommandString(input);
-        System.out.println("Your command is " + input);
-
-        boolean isUiCommand = processUiCommand(commandString);
-
-        if (isUiCommand) {
-            return;
-        }
-
-        // try {
-        // CommandResult result = logic.execute(commandString);
-        // mainScreen.initializeTaskTabPanel();
-        // mainScreen.loadCommandResultComponent(result);
-
-        // // TODO: Should only clear if the task has been deleted.
-        // if (result.getFeedbackToUser().contains("Deleted Task:")) {
-        // mainScreen.clearRightComponent();
-        // }
-        // System.out.println(result.getFeedbackToUser());
-        // } catch (CommandException e) {
-        // e.printStackTrace();
-        // System.out.println("[Your command] " + input + " is invalid");
-        // } catch (ParserException e) {
-        // e.printStackTrace();
-        // CommandResult errorResult = new CommandResult("[Not a valid command] " + input);
-        // mainScreen.loadCommandResultComponent(errorResult);
-        // }
-
+        // System.out.println("Your command is " + input);
         CommandResult result = logic.execute(commandString);
-        mainScreen.initializeTaskTabPanel();
         mainScreen.loadCommandResultComponent(result);
-
-        // TODO: Should only clear if the task has been deleted.
-        if (result.getFeedbackToUser().contains("Deleted Task:")) {
-            mainScreen.clearRightComponent();
-        }
+        returnFocusToTaskListPanel();
     }
 
-    private boolean processUiCommand(String commandString) {
-        checkIsExitCommand(commandString);
-
-        // TODO : TEMPORARY, REMOVE THIS IN THE FUTURE AFTER ABSTRACTING INTO GUI COMMANDS
-        if (isNumeric(commandString)) {
-            mainScreen.getTaskTabPanel().scrollToTaskIndex(Integer.parseInt(commandString));
-            return true;
-        }
-        return false;
-    }
-
-    private void checkIsExitCommand(String commandString) {
-        List<String> exitCommands = List.of("wq!", "wq", "q!", "q");
-        boolean isExitCommand = exitCommands.contains(commandString);
-        if (isExitCommand) {
-            Platform.exit();
-        }
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestFocus() {
         super.requestFocus();
@@ -146,25 +98,28 @@ public class CommandInput extends UiPart<HBox> {
         inputField.requestFocus();
     }
 
-    private void returnFocusToParent() {
-        mainScreen.getRoot().requestFocus();
+    private void returnFocusToTaskListPanel() {
+        mainScreen.getTaskListPanel().requestFocus();
     }
 
     @FXML
     private void initialize() {
-        this.getRoot().setFocusTraversable(true); // Important
-        inputField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean wasFocused,
-                    Boolean isCommandInputFocused) {
-                // bottomComponent may be displaying CommandResult.
-                boolean isCommandInputLingering =
-                        mainScreen.bottomComponent.getChildren().contains(getRoot());
-                if (!isCommandInputFocused && isCommandInputLingering) {
-                    mainScreen.clearBottomComponent();
-                }
+        this.getRoot().setFocusTraversable(true);
+
+        // When CommandInput loses focus, clear CommandInput from mainScreen.bottomComponent and
+        // return the focus back to TaskListPanel
+        ChangeListener<Boolean> onLostFocusListener = (arg0, wasFocused, isCommandInputFocused) -> {
+            // bottomComponent may be displaying CommandResult, we do not want to clear
+            // CommandResult messages.
+            boolean isCommandInputLingering =
+                    mainScreen.getBottomComponent().getChildren().contains(this.getRoot());
+            if (!isCommandInputFocused && isCommandInputLingering) {
+                mainScreen.clearBottomComponent();
+                returnFocusToTaskListPanel();
             }
-        });
+        };
+
+        inputField.focusedProperty().addListener(onLostFocusListener);
     }
 
     private boolean isTextFieldEmpty() {

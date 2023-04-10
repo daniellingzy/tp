@@ -5,9 +5,9 @@ import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import vimification.Gui;
-import vimification.commons.core.LogsCenter;
-import vimification.commons.util.StringUtil;
+import vimification.MainApp;
+import vimification.common.core.LogsCenter;
+import vimification.common.util.StringUtil;
 import vimification.internal.Logic;
 
 /**
@@ -29,6 +29,9 @@ public class UiManager implements Ui {
         this.logic = logic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
@@ -40,6 +43,8 @@ public class UiManager implements Ui {
             primaryStage.setTitle("Vimification");
             primaryStage.setHeight(500);
             primaryStage.setWidth(1000);
+            primaryStage.setMinHeight(500);
+            primaryStage.setMinWidth(1000);
 
             MainScreen mainScreen = new MainScreen(logic);
             logic.setMainScreen(mainScreen);
@@ -55,8 +60,11 @@ public class UiManager implements Ui {
         }
     }
 
+    /**
+     * Returns an image from the given image path.
+     */
     private Image getImage(String imagePath) {
-        return new Image(Gui.class.getResourceAsStream(imagePath));
+        return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
 
 }

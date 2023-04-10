@@ -1,11 +1,9 @@
 package vimification.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-
-import java.util.function.Predicate;
-
 import javafx.application.Platform;
+import javafx.scene.control.ListView;
+import java.util.function.Predicate;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import vimification.model.UiTaskList;
@@ -36,7 +34,18 @@ public class TaskListPanel extends UiPart<VBox> {
     public TaskListPanel(UiTaskList taskList) {
         super(FXML);
         this.taskList = taskList;
-        taskListView.setItems(taskList.getInternalList());
+        taskListView.setItems(taskList.getUiSource());
+        taskListView.setCellFactory(listView -> new TaskListViewCell());
+    }
+
+    /**
+     * Creates a {@code TaskListPanel} with the given {@code ObservableList} and {@code MainScreen}.
+     */
+    public TaskListPanel(UiTaskList taskList, MainScreen mainScreen) {
+        super(FXML);
+        this.taskList = taskList;
+        this.mainScreen = mainScreen;
+        taskListView.setItems(taskList.getUiSource());
         taskListView.setCellFactory(listView -> new TaskListViewCell());
     }
 
@@ -44,8 +53,21 @@ public class TaskListPanel extends UiPart<VBox> {
         this.mainScreen = parent;
     }
 
+    /**
+     * Requests focus on the TaskListPanel.
+     */
     public void requestFocus() {
         taskListView.requestFocus();
+        System.out.println(taskListView.getSelectionModel().getSelectedItem());
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+        int selectedTaskIndex = taskListView.getSelectionModel().getSelectedIndex();
+        if (selectedTask == null) {
+            scrollToTaskIndex(1);
+            return;
+        }
+
+        scrollToTaskIndex(selectedTaskIndex + 1);
+
     }
 
     /**
@@ -59,6 +81,9 @@ public class TaskListPanel extends UiPart<VBox> {
         taskListView.scrollTo(displayedIndex - 1);
     }
 
+    /**
+     * Initializes the TaskListPanel.
+     */
     @FXML
     private void initialize() {
         // TODO: Implement Visual Mode
@@ -74,9 +99,17 @@ public class TaskListPanel extends UiPart<VBox> {
         });
     }
 
+    /**
+     * Listener for handling all keyboard events to TaskListPanel.
+     *
+     * @param event
+     */
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         switch (event.getText()) {
+        case "h":
+            mainScreen.clearRightComponent();
+            break;
         case "l":
             Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
             TaskDetailPanel detailTask = new TaskDetailPanel(selectedTask);
@@ -96,7 +129,9 @@ public class TaskListPanel extends UiPart<VBox> {
         }
     }
 
-
+    /**
+     * Navigate to the next cell in the ListView.
+     */
     private void navigateToNextCell() {
         int currIndex = taskListView.getFocusModel().getFocusedIndex();
         int lastIndex = taskListView.getItems().size();
@@ -110,6 +145,9 @@ public class TaskListPanel extends UiPart<VBox> {
         }
     }
 
+    /**
+     * Navigate to the previous cell in the ListView.
+     */
     private void navigateToPrevCell() {
         int currIndex = taskListView.getFocusModel().getFocusedIndex();
 
@@ -124,5 +162,39 @@ public class TaskListPanel extends UiPart<VBox> {
 
     public void searchForTask(Predicate<? super Task> predicate) {
         taskList.setPredicate(predicate);
+    }
+
+    /**
+     * Refreshes the TaskDetailPanel.
+     */
+    public void refreshTaskDetailPanel() {
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+
+        if (selectedTask == null) {
+            mainScreen.clearRightComponent();
+            return;
+        }
+
+        TaskDetailPanel taskDetailPanel = new TaskDetailPanel(selectedTask);
+        mainScreen.loadRightComponent(taskDetailPanel);
+    }
+
+    /**
+     * Loads the TaskDetailPanel.
+     */
+    public void loadTaskDetailPanel() {
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+
+        if (selectedTask == null) {
+            mainScreen.clearRightComponent();
+            return;
+        }
+        TaskDetailPanel taskDetailPanel = new TaskDetailPanel(selectedTask);
+        mainScreen.loadRightComponent(taskDetailPanel);
+
+    }
+
+    public UiTaskList getUiTaskList() {
+        return taskList;
     }
 }
