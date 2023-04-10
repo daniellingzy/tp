@@ -71,9 +71,9 @@ title: User Guide
 
 ## Introduction
 
-**Vimification** is a **desktop app** built for Vim enthusiasts to manage tasks and deadlines, optimized for use via a **Command Line Interface** (CLI) while still having the benefits of a **Graphical User Interface** (GUI).
+**Vimification** is a **desktop app** built for Vim enthusiasts to manage tasks and deadlines, optimized for use via a **Command Line Interface** (CLI) whilst having the benefits of a **Graphical User Interface** (GUI).
 
-**Vimification** is modelled after **Vim**, so the command syntax for the Vimificaiton CLI closely mimics **Vim**.
+**Vimification** is modelled after **Vim**, so the command syntax for the Vimificaiton CLI closely mimics that of **Vim**.
 
 <p class="back-to-top" style="text-align: right"><a href="#table-of-contents">Back to Top &#8593;</a></p>
 
