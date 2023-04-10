@@ -81,6 +81,8 @@ Overall, we hope to empower you to streamline your daily workflows and increase 
 3. Run `java -jar vimification.jar`.
 
 4. The application should launch, and a GUI similar to the below should appear in a few seconds. <br>
+
+
    <img class="ui-img" src="images/Ui.png" alt="Ui Image" title="Overall User Interface">
 
 ### Trying out the commands
@@ -319,9 +321,9 @@ Condition
     
 ### Exiting the application
 
-Similar to Vim, we can use the `:wq!`, `:q!`,,`:wq`,`:q` commands to exit the application.
+Similar to Vim, we can use the `:wq!`, `:q!`,`:wq`,`:q` commands to exit the application.
 
-Format: `:wq!`, `:q!`,,`:wq`,`:q`
+Format: `:wq!`, `:q!`,`:wq`,`:q`
 
 
 ### Saving the task list data
@@ -366,7 +368,6 @@ _Details coming soon in v2.0 ..._
 
 ## Command summary
 
-<<<<<<< HEAD
 | Action           | Format, Examples                                                                         |
 | ---------------- | ---------------------------------------------------------------------------------------- | --- |
 | **Add To-do**    | `:i todo [description]` <br> e.g., `i todo CS2103T UG`                                   |
@@ -386,4 +387,3 @@ _Details coming soon in v2.0 ..._
 | Edit existing data     |                            |                                                    |
 
 <p style="text-align: right"><a href="#table-of-contents">Back to Top &#8593;</a></p>
-
