@@ -22,7 +22,7 @@ class GuiSettingsTest {
 
         @Test
         @DisplayName("should set default values")
-        void shouldSetDefaultValues() {
+        void testDefaultValues() {
             // given
             GuiSettings settings = new GuiSettings();
 
@@ -39,7 +39,7 @@ class GuiSettingsTest {
 
         @Test
         @DisplayName("should set values correctly")
-        void shouldSetValuesCorrectly() {
+        void testCorrectValues() {
             // given
             double width = 800.0;
             double height = 600.0;
@@ -62,7 +62,7 @@ class GuiSettingsTest {
 
         @Test
         @DisplayName("should return true when objects are equal")
-        void shouldReturnTrueWhenObjectsAreEqual() {
+        void test_objectsEqual() {
             // given
             GuiSettings settings1 = new GuiSettings();
             GuiSettings settings2 = new GuiSettings();
@@ -73,7 +73,7 @@ class GuiSettingsTest {
 
         @Test
         @DisplayName("should return false when objects are not equal")
-        void shouldReturnFalseWhenObjectsAreNotEqual() {
+        void test_objectsNotEqual() {
             // given
             GuiSettings settings1 = new GuiSettings();
             GuiSettings settings2 = new GuiSettings(740, 600, 0, 0);
@@ -89,7 +89,7 @@ class GuiSettingsTest {
 
         @Test
         @DisplayName("should return the same hash code for equal objects")
-        void shouldReturnTheSameHashCodeForEqualObjects() {
+        void testHashCodeMethod() {
             // given
             GuiSettings settings1 = new GuiSettings();
             GuiSettings settings2 = new GuiSettings();
@@ -105,7 +105,7 @@ class GuiSettingsTest {
 
         @Test
         @DisplayName("should return a string representation of the object")
-        void shouldReturnAStringRepresentationOfTheObject() {
+        void testToString() {
             // given
             GuiSettings settings = new GuiSettings();
 
